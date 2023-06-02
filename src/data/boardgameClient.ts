@@ -3,5 +3,5 @@ import axios from 'axios'
 
 export const boardgameClient = axios.create({
     baseURL: 'http://case.senarion.com/swagger',
-    headers: { 'Authorization': 'boardgames123' }
+    headers: { 'Authorization': process.env.API_KEY }
 })
