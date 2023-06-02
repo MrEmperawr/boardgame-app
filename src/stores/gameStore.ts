@@ -10,8 +10,7 @@ export const useGamesStore = defineStore({
     actions: {
         async fetchGames() {
             const response = await boardgameClient.get('/boardgames')
-            return response.data;
-
+            this.games = response.data;
         },
     },
 })
