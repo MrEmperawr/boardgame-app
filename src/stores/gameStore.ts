@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { gameClient } from '@/services/boardgameClient'
+import { boardgameClient } from '@/services/boardgameClient'
 
 export const useGamesStore = defineStore({
     id: 'games',
@@ -9,10 +9,9 @@ export const useGamesStore = defineStore({
     }),
     actions: {
         async fetchGames() {
-            gameClient.get('/boardgames')
-                .then(response => {
-                    this.games = response.data
-                })
+            const response = await boardgameClient.get('/boardgames')
+            return response.data;
+
         },
     },
 })
