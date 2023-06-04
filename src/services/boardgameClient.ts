@@ -1,7 +1,12 @@
-// src/services/api.ts
 import axios from 'axios'
+import { Game } from '../models'
 
-export const boardgameClient = axios.create({
+const boardgameClient = axios.create({
     baseURL: 'http://case.senarion.com/swagger',
-    headers: { 'Authorization': process.env.API_KEY }
+    headers: { 'Authorization': 'boardgames123' }
 })
+
+export async function fetchGames(): Promise<Game[]> {
+    const response = await boardgameClient.get<Game[]>('/games')
+    return response.data
+}
