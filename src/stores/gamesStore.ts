@@ -7,6 +7,7 @@ export const useGamesStore = defineStore({
     state: () => ({
         games: [] as Game[],
         activeGame: null as Game | null,
+        selectedCategory: null as string | null,
         loading: false,
         error: null as string | null
     }),
@@ -29,7 +30,15 @@ export const useGamesStore = defineStore({
         },
         setActiveGame(game: Game) {
             this.activeGame = game
+        },
+        selectCategory(category: string | null) {
+            this.selectedCategory = category
+        },
+        getFilteredGames() {
+            if (!this.selectedCategory) {
+                return this.games
+            }
+            return this.games.filter(game => game.categories.includes(this.selectedCategory!))
         }
     },
 })
-

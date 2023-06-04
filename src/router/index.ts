@@ -1,3 +1,5 @@
+import AboutViewVue from '@/views/AboutView.vue'
+import CateogoriesViewVue from '@/views/CateogoriesView.vue'
 import GameDetailViewVue from '@/views/GameDetailView.vue'
 import HomeViewVue from '@/views/HomeView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -20,6 +22,16 @@ const router = createRouter({
       path: '/gamedetails',
       name: 'gamedetails',
       component: GameDetailViewVue
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: AboutViewVue
+    },
+    {
+      path: '/categories',
+      name: 'categories',
+      component: CateogoriesViewVue
     },
 
   ]

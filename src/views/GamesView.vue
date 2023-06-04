@@ -2,6 +2,10 @@
   <main>
     <div>
       <h1>Games</h1>
+      <select v-model="selectedCategory" @change="onCategoryChange">
+        <option value="">All Categories</option>
+        <option v-for="category in categories" :key="category">{{ category }}</option>
+      </select>
       <div v-if="loading">
         <p>Loading...</p>
       </div>
@@ -26,9 +30,22 @@ export default {
   },
   setup() {
     const gamesStore = useGamesStore()
-    const games = computed(() => gamesStore.games)
+    const games = computed(() => gamesStore.getFilteredGames())
     const loading = computed(() => gamesStore.loading)
     const error = computed(() => gamesStore.error)
+    const categories = computed(() => {
+      const allCategories = games.value.flatMap(game => game.categories)
+      return Array.from(new Set(allCategories))  // remove duplicates
+    })
+    const selectedCategory = computed({
+      get: () => gamesStore.selectedCategory,
+      set: (value) => gamesStore.selectCategory(value),
+    })
+
+    function onCategoryChange() {
+      gamesStore.selectCategory(selectedCategory.value)
+    }
+
 
     gamesStore.fetchGames()
 
@@ -36,6 +53,9 @@ export default {
       games,
       loading,
       error,
+      categories,
+      selectedCategory,
+      onCategoryChange,
     }
   },
 }
