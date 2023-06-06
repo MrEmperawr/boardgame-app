@@ -34,21 +34,24 @@
 import { FirebaseError } from '@firebase/util';
 import { defineComponent, ref } from 'vue';
 import { useUserStore } from '../stores/userStore';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
-    name: 'LoginPage',
+    name: 'LoginView',
     setup() {
-        const userStore = useUserStore();
+        const userStore = useUserStore()
+        const router = useRouter()
 
-        const email = ref('');
-        const password = ref('');
-        const error = ref('');
-        const showRegisterMessage = ref(false);
+        const email = ref('')
+        const password = ref('')
+        const error = ref('')
+        const showRegisterMessage = ref(false)
 
         const handleLogin = async () => {
             try {
-                await userStore.login(email.value, password.value);
-                showRegisterMessage.value = false; // Reset the register message if login is successful
+                await userStore.login(email.value, password.value)
+                showRegisterMessage.value = false
+                router.push({ name: 'home' })
             } catch (e) {
                 if (e instanceof FirebaseError) {
                     if (e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password') {
@@ -63,7 +66,7 @@ export default defineComponent({
         };
 
         const clearError = () => {
-            error.value = '';
+            error.value = ''
         };
 
         return {
