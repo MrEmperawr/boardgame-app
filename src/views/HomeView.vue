@@ -3,7 +3,9 @@
         <v-row justify="center">
             <v-col align-self="center">
                 <v-card flat color="primary" class="text-center text-white">
-                    <v-img height="400" src="banner-image.jpg" alt="A collection of board games"></v-img>
+                    <v-img height="400"
+                        src="https://cdn1.epicgames.com/spt-assets/61c1413e3db0423f9ddd4a5edbee717e/a-game-of-thrones-offer-11gxu.jpg"
+                        alt="A collection of board games"></v-img>
                     <v-card-title class="mt-5 display-2">
                         Welcome to Board Game Explorer!
                     </v-card-title>

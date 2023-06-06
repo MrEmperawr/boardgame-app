@@ -2,6 +2,7 @@ import AboutViewVue from '@/views/AboutView.vue'
 import CateogoriesViewVue from '@/views/CateogoriesView.vue'
 import GameDetailViewVue from '@/views/GameDetailView.vue'
 import HomeViewVue from '@/views/HomeView.vue'
+import LoginViewVue from '@/views/LoginView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import GamesViewVue from '../views/GamesView.vue'
 
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/categories',
       name: 'categories',
       component: CateogoriesViewVue
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginViewVue,
     },
 
   ]

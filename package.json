@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/firebase": "^3.2.1",
     "@types/vue-router": "^2.0.0",
     "axios": "^1.4.0",
+    "firebase": "^9.22.1",
     "pinia": "^2.0.36",
     "vue": "^3.3.2",
     "vue-router": "^4.2.2",
