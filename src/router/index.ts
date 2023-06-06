@@ -25,7 +25,7 @@ const router = createRouter({
     },
     {
       path: '/about',
-      name: 'About',
+      name: 'about',
       component: AboutViewVue
     },
     {

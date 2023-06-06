@@ -1,22 +1,19 @@
 <template>
-  <main>
-    <div>
-      <h1>Games</h1>
-      <select v-model="selectedCategory" @change="onCategoryChange">
-        <option value="">All Categories</option>
-        <option v-for="category in categories" :key="category">{{ category }}</option>
-      </select>
-      <div v-if="loading">
-        <p>Loading...</p>
-      </div>
-      <div v-else-if="error">
-        <p>Error: {{ error }}</p>
-      </div>
-      <div v-else>
-        <game-tile v-for="game in games" :key="game.id" :game="game" />
-      </div>
-    </div>
-  </main>
+  <v-container>
+    <v-row justify="center">
+      <v-col>
+        <h1>Games</h1>
+        <v-select v-model="selectedCategory" @change="onCategoryChange" :items="categories" label="Category"></v-select>
+        <v-progress-circular v-if="loading" indeterminate></v-progress-circular>
+        <v-alert v-else-if="error" type="error">{{ error }}</v-alert>
+        <v-row v-else>
+          <v-col md="4" sm="6" cols="12" v-for="game in games" :key="game.id">
+            <game-tile :game="game" />
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">

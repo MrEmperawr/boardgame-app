@@ -1,12 +1,16 @@
 <template>
-    <main class="categories">
-        <section v-for="category in categories" :key="category">
-            <h2>{{ category }}</h2>
-            <div v-for="game in getGamesByCategory(category)" :key="game.id">
-                <GameTile :game="game" />
-            </div>
-        </section>
-    </main>
+    <v-container>
+        <v-row v-for="category in categories" :key="category" justify="center">
+            <v-col>
+                <h2>{{ category }}</h2>
+                <v-row>
+                    <v-col md="4" sm="6" cols="12" v-for="game in getGamesByCategory(category)" :key="game.id">
+                        <GameTile :game="game" />
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script lang="ts">

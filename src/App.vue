@@ -1,13 +1,20 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-</script>
-
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/games">Games</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <RouterView />
+  <v-app>
+    <NavBar />
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
+<script lang="ts">
+import { defineComponent } from 'vue'
+import NavBar from './components/NavBar.vue';
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    NavBar
+  }
+})
+</script>
