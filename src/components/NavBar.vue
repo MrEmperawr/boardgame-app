@@ -7,25 +7,18 @@
             </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn class="text-subtitle-1" color="primary" variant="flat" :to="{ name: 'games' }">Games</v-btn>
-        <v-btn class="text-subtitle-1" color="primary" variant="flat" :to="{ name: 'about' }">About</v-btn>
-        <v-btn v-if="!user" :to="{ name: 'login' }">Login</v-btn>
+        <Drawer />
     </v-app-bar>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { useUserStore } from '../stores/userStore';
+import { defineComponent } from 'vue'
+import Drawer from './Drawer.vue'
 
 export default defineComponent({
     name: 'NavBar',
-    setup() {
-        const userStore = useUserStore();
-        const user = userStore.user;
-
-        return {
-            user,
-        };
-    },
-});
+    components: {
+        Drawer
+    }
+})
 </script>

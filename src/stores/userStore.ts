@@ -49,6 +49,7 @@ export const useUserStore = defineStore('user', {
         },
         async logout() {
             try {
+                this.loading = true
                 await auth.signOut()
                 this.user = null
                 this.error = null

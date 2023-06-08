@@ -3,7 +3,7 @@ import { Game } from '../models'
 
 const boardgameClient = axios.create({
     baseURL: 'http://case.senarion.com',
-    headers: { Authorization: 'boardgames123', Accept: '*/*' }
+    headers: { 'X-API-Key': 'boardgames123', Accept: '*/*' }
 })
 
 export async function fetchGames(): Promise<Game[]> {
