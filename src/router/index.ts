@@ -21,8 +21,8 @@ const router = createRouter({
       component: GamesViewVue
     },
     {
-      path: '/gamedetails',
-      name: 'gamedetails',
+      path: '/gamedetail',
+      name: 'gamedetail',
       component: GameDetailViewVue
     },
     {

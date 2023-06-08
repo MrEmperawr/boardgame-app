@@ -32,7 +32,7 @@ export default {
     const error = computed(() => gamesStore.error)
     const categories = computed(() => {
       const allCategories = games.value.flatMap(game => game.categories)
-      return Array.from(new Set(allCategories))  // remove duplicates
+      return Array.from(new Set(allCategories))
     })
     const selectedCategory = computed({
       get: () => gamesStore.selectedCategory,

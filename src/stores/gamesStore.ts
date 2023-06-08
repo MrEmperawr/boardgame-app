@@ -19,6 +19,7 @@ export const useGamesStore = defineStore({
                 this.games = games
                 this.loading = false
             } catch (e) {
+                console.log(e)
                 if (e instanceof Error) {
                     this.error = `Failed to fetch games: ${e.message}`
                     this.loading = false
