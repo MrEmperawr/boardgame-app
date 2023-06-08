@@ -6,6 +6,7 @@ export const useGamesStore = defineStore({
     id: 'games',
     state: () => ({
         games: [] as Game[],
+        allCategories: [] as string[],
         activeGame: null as Game | null,
         selectedCategory: null as string | null,
         loading: false,
@@ -18,6 +19,17 @@ export const useGamesStore = defineStore({
                 const games = await fetchGames()
                 this.games = games
                 this.loading = false
+
+                const categorySet = new Set<string>();
+
+                games.forEach(game => {
+                    game.categories.forEach(category => {
+                        categorySet.add(category);
+                    })
+                });
+
+                this.allCategories = Array.from(categorySet);
+
             } catch (e) {
                 console.log(e)
                 if (e instanceof Error) {

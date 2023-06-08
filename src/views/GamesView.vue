@@ -30,10 +30,7 @@ export default {
     const games = computed(() => gamesStore.getFilteredGames())
     const loading = computed(() => gamesStore.loading)
     const error = computed(() => gamesStore.error)
-    const categories = computed(() => {
-      const allCategories = games.value.flatMap(game => game.categories)
-      return Array.from(new Set(allCategories))
-    })
+    const categories = computed(() => gamesStore.allCategories)
     const selectedCategory = computed({
       get: () => gamesStore.selectedCategory,
       set: (value) => gamesStore.selectCategory(value),
