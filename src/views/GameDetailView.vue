@@ -45,7 +45,8 @@
                 Game</v-btn>
         </v-row>
 
-        <RatingDialog v-model="dialogVisible" @close="closeDialog" @submit="submitForm"></RatingDialog>
+        <RatingDialog :modelValue="dialogVisible" @update:modelValue="val => dialogVisible = val" @close="closeDialog"
+            @submit="submitForm"></RatingDialog>
     </v-container>
 </template>
 
@@ -67,15 +68,16 @@ export default defineComponent({
         const gamesStore = useGamesStore();
         const userStore = useUserStore();
         const activeGame = computed<Game | null>(() => gamesStore.activeGame);
-        const dialogVisible = ref(true);
+        const dialogVisible = ref(false);
 
         const goBack = () => {
             router.back();
         };
 
         const openDialog = () => {
-            console.log('HELLO')
+            console.log(dialogVisible.value)
             dialogVisible.value = true;
+            console.log(dialogVisible.value)
         };
 
         const closeDialog = () => {

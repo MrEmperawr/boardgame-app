@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { watch, ref } from 'vue';
 
 export default {
     name: 'RatingDialog',
@@ -49,6 +49,10 @@ export default {
         const snackbarColor = ref('');
         const isLoading = ref(false);
 
+        watch(() => props.modelValue, (newVal) => {
+            dialogVisible.value = newVal;
+        });
+
         const closeDialog = () => {
             dialogVisible.value = false;
             emit('update:modelValue', false);
@@ -60,7 +64,6 @@ export default {
                 isLoading.value = true;
 
                 try {
-
                     emit('submit', {
                         rating: ratingValue.value,
                         duration: durationValue.value,
