@@ -51,7 +51,6 @@
 import { defineComponent, computed } from 'vue'
 import { useGamesStore } from '../stores/gamesStore'
 import { Game } from '@/models/index'
-import { RouterLink } from 'vue-router'
 import router from '@/router'
 
 export default defineComponent({

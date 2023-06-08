@@ -1,3 +1,4 @@
+import { storeGameDuration, storeGameOwnership, storeRating } from '@/services/firestoreClient';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from 'firebase/auth';
 import { defineStore } from 'pinia';
 
@@ -64,6 +65,41 @@ export const useUserStore = defineStore('user', {
         },
         clearError() {
             this.error = null;
+        },
+        async storeRating(gameId: string, rating: number) {
+            try {
+                this.loading = true;
+                await storeRating(this.user?.uid || '', gameId, rating);
+                this.error = null;
+            } catch (e) {
+                this.error = unkownError;
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async storeGameDuration(gameId: string, duration: number) {
+            try {
+                this.loading = true;
+                await storeGameDuration(this.user?.uid || '', gameId, duration);
+                this.error = null;
+            } catch (error) {
+                this.error = unkownError;
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async storeGameOwnership(gameId: string, isOwned: boolean) {
+            try {
+                this.loading = true;
+                await storeGameOwnership(this.user?.uid || '', gameId, isOwned);
+                this.error = null;
+            } catch (error) {
+                this.error = unkownError;
+            } finally {
+                this.loading = false;
+            }
         },
     },
 });
