@@ -15,6 +15,9 @@
                             <v-text-field v-model="durationValue" label="Duration (hours)" type="number" min="1"
                                 required></v-text-field>
                         </v-col>
+                        <v-col cols="12">
+                            <v-checkbox v-model="isGameOwned" label="I own this game"></v-checkbox>
+                        </v-col>
                     </v-row>
                 </v-form>
             </v-card-text>
@@ -48,6 +51,7 @@ export default {
         const snackbarMessage = ref('');
         const snackbarColor = ref('');
         const isLoading = ref(false);
+        const isGameOwned = ref(false);
 
         watch(() => props.modelValue, (newVal) => {
             dialogVisible.value = newVal;
@@ -67,6 +71,7 @@ export default {
                     emit('submit', {
                         rating: ratingValue.value,
                         duration: durationValue.value,
+                        isOwned: isGameOwned.value,
                     });
 
                     snackbarMessage.value = 'Data saved successfully!';
@@ -88,6 +93,7 @@ export default {
             dialogVisible,
             ratingValue,
             durationValue,
+            isGameOwned,
             snackbarVisible,
             snackbarMessage,
             snackbarColor,

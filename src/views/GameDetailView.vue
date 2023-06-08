@@ -45,19 +45,20 @@
                 Game</v-btn>
         </v-row>
 
-        <RatingDialog :modelValue="dialogVisible" @update:modelValue="val => dialogVisible = val" @close="closeDialog"
+        <RatingDialog :modelValue="dialogVisible" @update:modelValue="value => dialogVisible = value" @close="closeDialog"
             @submit="submitForm"></RatingDialog>
     </v-container>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue';
-import { useGamesStore } from '../stores/gamesStore';
-import { useUserStore } from '../stores/userStore';
-import { Game } from '@/models/index';
-import router from '@/router';
-import RatingDialog from '@/components/RatingDialog.vue';
-import { storeRating, storeGameDuration } from '@/services/firestoreClient';
+import { defineComponent, computed, ref } from 'vue'
+import { useGamesStore } from '../stores/gamesStore'
+import { useUserStore } from '../stores/userStore'
+import { Game } from '@/models/index'
+import router from '@/router'
+import RatingDialog from '@/components/RatingDialog.vue'
+import { storeRating, storeGameDuration, storeGameOwnership } from '@/services/firestoreClient'
+import { RatingSubmitFormValues } from '@/models/inputModels'
 
 export default defineComponent({
     name: 'GameDetails',
@@ -65,47 +66,42 @@ export default defineComponent({
         RatingDialog,
     },
     setup() {
-        const gamesStore = useGamesStore();
-        const userStore = useUserStore();
-        const activeGame = computed<Game | null>(() => gamesStore.activeGame);
-        const dialogVisible = ref(false);
+        const gamesStore = useGamesStore()
+        const userStore = useUserStore()
+        const activeGame = computed<Game | null>(() => gamesStore.activeGame)
+        const dialogVisible = ref(false)
 
         const goBack = () => {
-            router.back();
+            router.back()
         };
 
         const openDialog = () => {
-            console.log(dialogVisible.value)
-            dialogVisible.value = true;
-            console.log(dialogVisible.value)
+            dialogVisible.value = true
         };
 
         const closeDialog = () => {
-            dialogVisible.value = false;
+            dialogVisible.value = false
         };
 
-        const submitForm = async ({ rating, duration }: { rating: number; duration: number }) => {
+        const submitForm = async ({ rating, duration, isGameOwned }: RatingSubmitFormValues) => {
             const userId = userStore.user?.uid;
             const gameId = activeGame.value?.id;
 
             if (userId && gameId && rating !== null && duration !== null) {
+                const promises = [
+                    storeRating(userId, gameId, rating),
+                    storeGameDuration(userId, gameId, duration),
+                    storeGameOwnership(userId, gameId, isGameOwned),
+                ]
                 try {
-                    await storeRating(userId, gameId, rating);
-                    console.log('Rating stored successfully');
+                    await Promise.all(promises)
+                    closeDialog()
                 } catch (error) {
-                    console.error('Error storing rating:', error);
+                    console.error('Error occurred while executing promises:', error)
                 }
-
-                try {
-                    await storeGameDuration(userId, gameId, duration);
-                    console.log('Game duration stored successfully');
-                } catch (error) {
-                    console.error('Error storing game duration:', error);
-                }
-
-                closeDialog();
             }
-        };
+        }
+
 
         return {
             activeGame,
