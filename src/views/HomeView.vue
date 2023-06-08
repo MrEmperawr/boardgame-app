@@ -2,7 +2,7 @@
     <v-container fluid>
         <v-row justify="center">
             <v-col align-self="center">
-                <v-card flat color="primary" class="text-center text-white">
+                <v-card flat color="teal-darken-4" class="text-center text-white">
                     <v-img height="400"
                         src="https://cdn1.epicgames.com/spt-assets/61c1413e3db0423f9ddd4a5edbee717e/a-game-of-thrones-offer-11gxu.jpg"
                         alt="A collection of board games"></v-img>
@@ -24,8 +24,11 @@
                         and categories. Not only that, but you can also see what other users think about a game and share
                         your own ratings. Start your board game adventure now!
                     </v-card-text>
+
                     <v-card-actions>
-                        <v-btn color="primary" dark :to="{ name: 'games' }">Explore Games</v-btn>
+                        <v-row justify="center">
+                            <v-btn color="teal-darken-4" dark :to="{ name: 'games' }">Explore Games</v-btn>
+                        </v-row>
                     </v-card-actions>
                 </v-card>
             </v-col>

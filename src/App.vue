@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <NavBar />
+    <AppHeader />
     <v-main>
       <router-view />
     </v-main>
@@ -9,12 +9,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import NavBar from './components/NavBar.vue';
+import AppHeader from './components/AppHeader.vue';
+
 
 export default defineComponent({
   name: 'App',
   components: {
-    NavBar
+    AppHeader
   }
 })
 </script>

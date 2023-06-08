@@ -29,7 +29,7 @@ export default defineComponent({
 
         const categories = computed(() => {
             const allCategories = games.value.flatMap((game) => game.categories)
-            return Array.from(new Set(allCategories))  // remove duplicates
+            return Array.from(new Set(allCategories))
         })
 
         const getGamesByCategory = (category: string) => {
