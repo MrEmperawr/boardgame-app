@@ -1,5 +1,5 @@
 import { storeGameDuration, storeGameOwnership, storeRating } from '@/services/firestoreClient';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth';
 import { defineStore } from 'pinia';
 
 import { unkownError } from '../constants/messages';
@@ -16,11 +16,24 @@ export const useUserStore = defineStore('user', {
         isAuthenticated: (state) => !!state.user,
     },
     actions: {
+        async initialize() {
+            this.loading = true;
+            try {
+                onAuthStateChanged(auth, (user) => {
+                    this.user = user;
+                    this.loading = false;
+                });
+            } catch (error) {
+                this.error = unkownError;
+                this.loading = false;
+            }
+        },
         async register(email: string, password: string) {
             try {
                 this.loading = true;
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 this.user = userCredential.user;
+
                 this.error = null;
             } catch (e) {
                 if (e instanceof Error) {
@@ -34,11 +47,14 @@ export const useUserStore = defineStore('user', {
             }
         },
         async login(email: string, password: string) {
+            console.log(this.user || "REEEEEEEEEEE")
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password)
                 this.user = userCredential.user;
+                console.log(this.user)
                 this.error = null
             } catch (e) {
+                console.log(e)
                 if (e instanceof Error) {
                     this.user = null
                     this.error = e.message

@@ -3,7 +3,7 @@
         <v-app-bar app color="teal-darken-4" dark>
             <v-toolbar-title>
                 <router-link to="/" class="white--text">
-                    Board Game Explorer
+                    Board Games
                 </router-link>
             </v-toolbar-title>
             <v-spacer></v-spacer>
@@ -20,7 +20,7 @@
                 <v-list-item link :to="{ name: 'about' }">
                     <v-list-item-title>About</v-list-item-title>
                 </v-list-item>
-                <v-list-item v-if="!user" link :to="{ name: 'login' }">
+                <v-list-item v-if="!isAuthenticated" link :to="{ name: 'login' }">
                     <v-list-item-title>Login</v-list-item-title>
                 </v-list-item>
                 <v-list-item v-else @click="logout">
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { useUserStore } from '../stores/userStore'
 
 export default defineComponent({
@@ -40,7 +40,7 @@ export default defineComponent({
     setup() {
         const drawer = ref(false)
         const userStore = useUserStore()
-        const user = userStore.user
+        const isAuthenticated = computed(() => userStore.isAuthenticated)
 
         const logout = async () => {
             await userStore.logout()
@@ -49,7 +49,7 @@ export default defineComponent({
 
         return {
             drawer,
-            user,
+            isAuthenticated,
             logout
         }
     }

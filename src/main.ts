@@ -17,10 +17,13 @@ const vuetify = createVuetify({
 
 import App from './App.vue'
 import router from './router'
+import { useUserStore } from './stores/userStore'
 
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)
+const userStore = useUserStore();
+userStore.initialize();
 app.mount('#app')

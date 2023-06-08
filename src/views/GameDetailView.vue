@@ -39,31 +39,81 @@
             </v-card-text>
         </v-card>
 
-        <v-row class="mt-4">
-            <v-col cols="12">
-                <v-btn color="primary" @click="goBack">Go Back</v-btn>
-            </v-col>
+        <v-row class="mt-4" justify="space-evenly">
+            <v-btn color="teal-darken-4" @click="goBack">Go Back</v-btn>
+            <v-btn v-if="userStore.isAuthenticated && activeGame" color="teal-darken-4" @click="openDialog">Rate
+                Game</v-btn>
         </v-row>
+
+        <RatingDialog v-model="dialogVisible" @close="closeDialog" @submit="submitForm"></RatingDialog>
     </v-container>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useGamesStore } from '../stores/gamesStore'
-import { Game } from '@/models/index'
-import router from '@/router'
+import { defineComponent, computed, ref } from 'vue';
+import { useGamesStore } from '../stores/gamesStore';
+import { useUserStore } from '../stores/userStore';
+import { Game } from '@/models/index';
+import router from '@/router';
+import RatingDialog from '@/components/RatingDialog.vue';
+import { storeRating, storeGameDuration } from '@/services/firestoreClient';
 
 export default defineComponent({
     name: 'GameDetails',
+    components: {
+        RatingDialog,
+    },
     setup() {
         const gamesStore = useGamesStore();
-        const activeGame = computed<Game | null>(() => gamesStore.activeGame)
+        const userStore = useUserStore();
+        const activeGame = computed<Game | null>(() => gamesStore.activeGame);
+        const dialogVisible = ref(true);
 
         const goBack = () => {
-            router.back()
+            router.back();
         };
 
-        return { activeGame, goBack }
+        const openDialog = () => {
+            console.log('HELLO')
+            dialogVisible.value = true;
+        };
+
+        const closeDialog = () => {
+            dialogVisible.value = false;
+        };
+
+        const submitForm = async ({ rating, duration }: { rating: number; duration: number }) => {
+            const userId = userStore.user?.uid;
+            const gameId = activeGame.value?.id;
+
+            if (userId && gameId && rating !== null && duration !== null) {
+                try {
+                    await storeRating(userId, gameId, rating);
+                    console.log('Rating stored successfully');
+                } catch (error) {
+                    console.error('Error storing rating:', error);
+                }
+
+                try {
+                    await storeGameDuration(userId, gameId, duration);
+                    console.log('Game duration stored successfully');
+                } catch (error) {
+                    console.error('Error storing game duration:', error);
+                }
+
+                closeDialog();
+            }
+        };
+
+        return {
+            activeGame,
+            goBack,
+            userStore,
+            dialogVisible,
+            openDialog,
+            closeDialog,
+            submitForm,
+        };
     },
 });
 </script>
@@ -79,7 +129,6 @@ export default defineComponent({
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     white-space: normal;
-
 }
 
 .subtitle-1 {

@@ -53,6 +53,7 @@ export default defineComponent({
                 showRegisterMessage.value = false
                 router.push({ name: 'home' })
             } catch (e) {
+                console.log(e)
                 if (e instanceof FirebaseError) {
                     if (e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password') {
                         showRegisterMessage.value = true;
