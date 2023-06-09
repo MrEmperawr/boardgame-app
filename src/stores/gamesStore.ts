@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import router from '@/router';
+
 import { Game } from '@/models';
 import { fetchGames } from '@/services/boardgameClient';
 
@@ -52,6 +54,10 @@ export const useGamesStore = defineStore({
                 return this.games
             }
             return this.games.filter(game => game.categories.includes(this.selectedCategory!))
-        }
+        },
+        navigateToGameDetails(game: Game) {
+            this.setActiveGame(game)
+            router.push({ name: 'gamedetail', params: { id: game.id } })
+        },
     },
 })

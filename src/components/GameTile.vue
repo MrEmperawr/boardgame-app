@@ -8,7 +8,7 @@
             <div class="body-2 my-2">Number of Owners: {{ ownersValue }}</div>
         </v-card-text>
         <v-card-actions>
-            <v-btn :to="{ name: 'gamedetail', params: { id: game.id } }" @click="setActiveGame">
+            <v-btn @click="navigateToGameDetails(game)">
                 Details
             </v-btn>
         </v-card-actions>
@@ -36,15 +36,20 @@ export default defineComponent({
             gamesStore.setActiveGame(props.game)
         }
 
-        const ratingValue = computed(() => props.rating ?? 0);
-        const durationValue = computed(() => props.duration ?? 0);
-        const ownersValue = computed(() => props.owners ?? 0);
+        const ratingValue = computed(() => props.rating ?? 0)
+        const durationValue = computed(() => props.duration ?? 0)
+        const ownersValue = computed(() => props.owners ?? 0)
+
+        const navigateToGameDetails = (game: Game) => {
+            gamesStore.navigateToGameDetails(game);
+        };
 
         return {
             setActiveGame,
             ratingValue,
             durationValue,
-            ownersValue
+            ownersValue,
+            navigateToGameDetails
         }
     },
 })
