@@ -44,29 +44,29 @@ export default {
         },
     },
     setup(props, { emit }) {
-        const dialogVisible = ref(props.modelValue);
-        const ratingValue = ref(null);
-        const durationValue = ref(null);
-        const snackbarVisible = ref(false);
-        const snackbarMessage = ref('');
-        const snackbarColor = ref('');
-        const isLoading = ref(false);
-        const isGameOwned = ref(false);
+        const dialogVisible = ref(props.modelValue)
+        const ratingValue = ref(null)
+        const durationValue = ref(null)
+        const snackbarVisible = ref(false)
+        const snackbarMessage = ref('')
+        const snackbarColor = ref('')
+        const isLoading = ref(false)
+        const isGameOwned = ref(false)
 
         watch(() => props.modelValue, (newVal) => {
-            dialogVisible.value = newVal;
+            dialogVisible.value = newVal
         });
 
         const closeDialog = () => {
-            dialogVisible.value = false;
-            emit('update:modelValue', false);
-            emit('close');
+            dialogVisible.value = false
+            emit('update:modelValue', false)
+            emit('close')
         };
 
         const saveForm = async () => {
             if (ratingValue.value !== null && durationValue.value !== null) {
-                isLoading.value = true;
-
+                isLoading.value = true
+                console.log(isGameOwned.value)
                 try {
                     emit('submit', {
                         rating: ratingValue.value,
@@ -74,18 +74,18 @@ export default {
                         isOwned: isGameOwned.value,
                     });
 
-                    snackbarMessage.value = 'Data saved successfully!';
-                    snackbarColor.value = 'success';
-                    snackbarVisible.value = true;
+                    snackbarMessage.value = 'Data saved successfully!'
+                    snackbarColor.value = 'success'
+                    snackbarVisible.value = true
                 } catch (error) {
-                    snackbarMessage.value = 'Error saving data.';
-                    snackbarColor.value = 'error';
-                    snackbarVisible.value = true;
+                    snackbarMessage.value = 'Error saving data.'
+                    snackbarColor.value = 'error'
+                    snackbarVisible.value = true
 
-                    console.error('Error:', error);
+                    console.error('Error:', error)
                 }
 
-                isLoading.value = false;
+                isLoading.value = false
             }
         };
 
