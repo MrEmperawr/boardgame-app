@@ -1,4 +1,3 @@
-import AboutViewVue from '@/views/AboutView.vue'
 import CateogoriesViewVue from '@/views/CateogoriesView.vue'
 import GameDetailViewVue from '@/views/GameDetailView.vue'
 import HomeViewVue from '@/views/HomeView.vue'
@@ -24,11 +23,6 @@ const router = createRouter({
       path: '/gamedetail',
       name: 'gamedetail',
       component: GameDetailViewVue
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: AboutViewVue
     },
     {
       path: '/categories',

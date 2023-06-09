@@ -17,9 +17,6 @@
                 <v-list-item link :to="{ name: 'games' }">
                     <v-list-item-title>Games</v-list-item-title>
                 </v-list-item>
-                <v-list-item link :to="{ name: 'about' }">
-                    <v-list-item-title>About</v-list-item-title>
-                </v-list-item>
                 <v-list-item v-if="!isAuthenticated" link :to="{ name: 'login' }">
                     <v-list-item-title>Login</v-list-item-title>
                 </v-list-item>
