@@ -16,7 +16,7 @@
                                 required></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                            <v-checkbox v-model="isGameOwned" label="I own this game"></v-checkbox>
+                            <v-checkbox v-model="isGameOwnedValue" label="I own this game"></v-checkbox>
                         </v-col>
                     </v-row>
                 </v-form>
@@ -47,11 +47,11 @@ export default {
         const dialogVisible = ref(props.modelValue)
         const ratingValue = ref(null)
         const durationValue = ref(null)
+        const isGameOwnedValue = ref(null)
         const snackbarVisible = ref(false)
         const snackbarMessage = ref('')
         const snackbarColor = ref('')
         const isLoading = ref(false)
-        const isGameOwned = ref(false)
 
         watch(() => props.modelValue, (newVal) => {
             dialogVisible.value = newVal
@@ -64,14 +64,18 @@ export default {
         };
 
         const saveForm = async () => {
-            if (ratingValue.value !== null && durationValue.value !== null) {
+            if (
+                ratingValue.value !== null
+                && durationValue.value !== null
+                && isGameOwnedValue.value !== null
+            ) {
                 isLoading.value = true
-                console.log(isGameOwned.value)
+
                 try {
                     emit('submit', {
                         rating: ratingValue.value,
                         duration: durationValue.value,
-                        isOwned: isGameOwned.value,
+                        isGameOwned: isGameOwnedValue.value,
                     });
 
                     snackbarMessage.value = 'Data saved successfully!'
@@ -93,7 +97,7 @@ export default {
             dialogVisible,
             ratingValue,
             durationValue,
-            isGameOwned,
+            isGameOwnedValue,
             snackbarVisible,
             snackbarMessage,
             snackbarColor,

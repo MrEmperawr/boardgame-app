@@ -87,7 +87,7 @@ export default defineComponent({
             const userId = userStore.user?.uid;
             const gameId = activeGame.value?.id;
 
-            if (userId && gameId && rating !== null && duration !== null) {
+            if (userId && gameId && rating !== null && duration !== null && isGameOwned != null) {
                 const promises = [
                     storeRating(userId, gameId, rating),
                     storeGameDuration(userId, gameId, duration),
@@ -101,7 +101,6 @@ export default defineComponent({
                 }
             }
         }
-
 
         return {
             activeGame,
