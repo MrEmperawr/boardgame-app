@@ -82,3 +82,15 @@ export async function countOwnedGames(): Promise<number> {
         return 0;
     }
 }
+
+export async function countOwnersForGame(gameId: string): Promise<number> {
+    try {
+        const gameOwnershipQuery = query(collection(userDatabase, 'gameOwnership'), where('gameId', '==', gameId));
+        const gameOwnershipSnapshot = await getDocs(gameOwnershipQuery);
+        const count = gameOwnershipSnapshot.size;
+        return count;
+    } catch (error) {
+        console.error('Error counting game owners:', error);
+        return 0;
+    }
+}
