@@ -2,6 +2,21 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
+### Start proxy for local dev environment
+
+In order to actually get the data from the boardgames endpoint a small server has been developed to act as a proxy.
+The Board Game API does not allow anyone to access it from any browser, from any host - seemingly strictly adhering to the Single Origin Policy (SOP).
+
+For development purposes the small express proxy exists only for ease of development and nothing else. You can start it as such:
+
+Run
+
+```
+node src/server/index.js
+```
+
+And you will be up and running!
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
@@ -50,3 +65,5 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+
